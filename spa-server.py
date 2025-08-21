@@ -17,6 +17,10 @@ def signal_handler(sig, frame):
     os._exit(0)
 
 class SPAHandler(http.server.SimpleHTTPRequestHandler):
+    def log_message(self, format, *args):
+        # Mostrar logs de requests para debug
+        print(f"[{self.address_string()}] {format % args}")
+    
     def do_GET(self):
         # Parse the URL and query parameters
         parsed_url = urlparse(self.path)
@@ -63,10 +67,15 @@ if __name__ == '__main__':
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
         url = f"http://localhost:{PORT}/"
         print(f"Servidor SPA ejecutándose en {url}")
+        print(f"También disponible en: http://127.0.0.1:{PORT}/")
         print("Presiona Ctrl+C para detener el servidor")
         
-        # Abrir el navegador predeterminado
-        webbrowser.open(url)
+        # Abrir en Google Chrome
+        try:
+            webbrowser.get('chrome').open(url)
+        except:
+            # Si Chrome no está disponible, usar navegador predeterminado
+            webbrowser.open(url)
         
         try:
             httpd.serve_forever()

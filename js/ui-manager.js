@@ -1296,10 +1296,8 @@ class UIManager {
         const user = this.authManager.getCurrentUser();
         if (user) {
             const userNameElement = document.getElementById('user-name');
-            const mobileUserNameElement = document.getElementById('mobile-user-name');
             
             if (userNameElement) userNameElement.textContent = user.name;
-            if (mobileUserNameElement) mobileUserNameElement.textContent = user.name;
 
             // Mostrar/ocultar elementos según rol
             if (user.role === 'admin' || user.role === 'teacher') {

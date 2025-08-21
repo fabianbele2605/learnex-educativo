@@ -78,17 +78,24 @@ class NavigationManager {
             return;
         }
 
-        // Actualizar navegación activa
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
+        // Actualizar navegación activa inmediatamente
+        requestAnimationFrame(() => {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = document.querySelector(`[data-section="${section}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
         });
-        
-        const activeLink = document.querySelector(`[data-section="${section}"]`);
-        if (activeLink) {
-            activeLink.classList.add('active');
-        }
 
         this.currentSection = section;
+        
+        // Cargar contenido inmediatamente
+        if (window.uiManager) {
+            window.uiManager.loadSectionContent(section);
+        }
         
         // Actualizar URL
         const currentPath = window.location.pathname;

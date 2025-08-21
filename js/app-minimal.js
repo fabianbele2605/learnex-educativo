@@ -110,7 +110,9 @@ class App {
             if (e.target.matches('.nav-link[data-section]')) {
                 e.preventDefault();
                 const section = e.target.dataset.section;
+                // Forzar carga inmediata sin esperar
                 this.navigateToSection(section);
+                return false;
             }
             
             if (e.target.id === 'load-sample-data') {
@@ -207,8 +209,12 @@ class App {
     }
 
     navigateToSection(section) {
+        // Carga inmediata y forzada
         this.navigationManager.navigateToSection(section);
-        this.uiManager.loadSectionContent(section);
+        // Asegurar que el contenido se carga inmediatamente
+        requestAnimationFrame(() => {
+            this.uiManager.loadSectionContent(section);
+        });
     }
 }
 

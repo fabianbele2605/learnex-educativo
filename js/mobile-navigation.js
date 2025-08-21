@@ -5,11 +5,7 @@ class MobileNavigation {
     constructor() {
         this.sidebar = document.getElementById('sidebar');
         this.sidebarOverlay = document.getElementById('sidebar-overlay');
-        this.mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        this.mobileMenuClose = document.getElementById('mobile-menu-close');
-        this.mobileLogoutBtn = document.getElementById('mobile-logout-btn');
         this.mainLogoutBtn = document.getElementById('logout-btn');
-        this.mobileUserName = document.getElementById('mobile-user-name');
         this.mainUserName = document.getElementById('user-name');
         
         this.isMenuOpen = false;
@@ -26,22 +22,7 @@ class MobileNavigation {
     }
 
     bindEvents() {
-        // Toggle del menú móvil
-        if (this.mobileMenuToggle) {
-            this.mobileMenuToggle.addEventListener('click', this.toggleMobileMenu.bind(this));
-        }
-
-        // Cerrar menú móvil
-        if (this.mobileMenuClose) {
-            this.mobileMenuClose.addEventListener('click', this.closeMobileMenu.bind(this));
-        }
-
-        // Cerrar menú al hacer click en overlay
-        if (this.sidebarOverlay) {
-            this.sidebarOverlay.addEventListener('click', this.closeMobileMenu.bind(this));
-        }
-
-        // Cerrar menú al hacer click en un enlace de navegación
+        // Solo eventos esenciales sin referencias a elementos eliminados
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -50,28 +31,6 @@ class MobileNavigation {
                 }
             });
         });
-
-        // Sincronizar botones de logout
-        if (this.mobileLogoutBtn && this.mainLogoutBtn) {
-            this.mobileLogoutBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.mainLogoutBtn.click();
-            });
-        }
-
-        // Manejar tecla ESC para cerrar menú
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isMenuOpen) {
-                this.closeMobileMenu();
-            }
-        });
-
-        // Prevenir scroll del body cuando el menú está abierto
-        document.addEventListener('touchmove', (e) => {
-            if (this.isMenuOpen && !this.sidebar.contains(e.target)) {
-                e.preventDefault();
-            }
-        }, { passive: false });
     }
 
     toggleMobileMenu() {
@@ -107,21 +66,7 @@ class MobileNavigation {
     }
 
     syncUserInfo() {
-        // Sincronizar información del usuario entre versión desktop y móvil
-        if (this.mainUserName && this.mobileUserName) {
-            const observer = new MutationObserver(() => {
-                this.mobileUserName.textContent = this.mainUserName.textContent;
-            });
-            
-            observer.observe(this.mainUserName, {
-                childList: true,
-                subtree: true,
-                characterData: true
-            });
-            
-            // Sincronización inicial
-            this.mobileUserName.textContent = this.mainUserName.textContent;
-        }
+        // Sin sincronización móvil para evitar demoras
     }
 
     handleResize() {
@@ -135,9 +80,6 @@ class MobileNavigation {
     updateUserName(name) {
         if (this.mainUserName) {
             this.mainUserName.textContent = name;
-        }
-        if (this.mobileUserName) {
-            this.mobileUserName.textContent = name;
         }
     }
 
