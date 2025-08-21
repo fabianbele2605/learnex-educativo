@@ -1,0 +1,255 @@
+/* Estilos para importación Excel */
+.excel-import-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.excel-drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    background: #f9f9f9;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.excel-drop-zone:hover {
+    border-color: #007bff;
+    background: #f0f8ff;
+}
+
+.excel-drop-zone.drag-over {
+    border-color: #28a745;
+    background: #f0fff0;
+    transform: scale(1.02);
+}
+
+.file-details {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.file-details h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.validation-summary {
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.validation-summary.valid {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.validation-summary.invalid {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.summary-stats {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.stat-item {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.stat-item.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.stat-item.warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.errors-section, .warnings-section {
+    margin: 20px 0;
+}
+
+.errors-list, .warnings-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.error-item {
+    background: white;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.error-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.error-number {
+    background: #dc3545;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.error-type {
+    background: #6c757d;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.error-message {
+    font-weight: bold;
+    color: #721c24;
+}
+
+.error-location {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+.warning-item {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn.btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn.btn-warning {
+    background: #ffc107;
+    color: #212529;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.loading-indicator {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #6c757d;
+}
+
+.fix-help-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+.fix-help-content {
+    background: white;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.fix-help-section {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.error-examples {
+    margin-top: 10px;
+    font-family: monospace;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.error-example {
+    margin: 5px 0;
+    color: #dc3545;
+}
+
+.more-errors {
+    color: #6c757d;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .excel-import-container {
+        padding: 10px;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .summary-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

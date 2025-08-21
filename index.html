@@ -1,11 +1,228 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Sistema de Gestión Académica CodeUp Riwi - Plataforma educativa para estudiantes, profesores y administradores">
+    <meta name="theme-color" content="#667eea">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="CodeUp Riwi">
+    <title>Sistema de Gestión Académica - CodeUp Riwi</title>
+    <base href="/">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modern-ui.css">
+    <link rel="stylesheet" href="css/messaging-files.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/styles.css" as="style">
+    <link rel="preload" href="css/modern-ui.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <!-- Agregar en la sección head, después de los otros archivos CSS -->
+    <link rel="stylesheet" href="css/messaging.css">
 </head>
 <body>
-    
+    <div id="app">
+        <!-- Login Screen -->
+        <div id="login-screen" class="screen active">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                        <div class="login-container card">
+                            <div class="login-header text-center">
+                                <h2><i class="fas fa-graduation-cap"></i> CodeUp Riwi</h2>
+                                <p>Sistema de Gestión Académica</p>
+                            </div>
+                            <form id="login-form" class="login-form">
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" id="email" name="email" required class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Contraseña:</label>
+                                    <input type="password" id="password" name="password" required class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                                </button>
+                            </form>
+                            <div class="login-footer text-center">
+                                <p>¿No tienes cuenta? <a href="/register" id="show-register">Regístrate aquí</a></p>
+                                <button type="button" id="load-sample-data" class="btn btn-secondary btn-sm mt-2">
+                                    📦 Cargar Datos de Prueba
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla de Registro -->
+        <div id="register-screen" class="screen">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+                        <div class="register-container card">
+                            <div class="register-header text-center">
+                                <h2><i class="fas fa-user-plus"></i> Registro de Usuario</h2>
+                                <a href="/login" id="back-to-login" class="btn btn-secondary btn-sm mobile-hide">
+                                    <i class="fas fa-arrow-left"></i> Volver al Login
+                                </a>
+                            </div>
+                            <form id="register-form" class="register-form">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="reg-name">Nombre Completo:</label>
+                                            <input type="text" id="reg-name" name="name" required class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="reg-email">Email:</label>
+                                            <input type="email" id="reg-email" name="email" required class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="reg-password">Contraseña:</label>
+                                            <input type="password" id="reg-password" name="password" required class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="reg-role">Rol:</label>
+                                            <select id="reg-role" name="role" required class="form-control">
+                                                <option value="">Seleccionar rol</option>
+                                                <option value="student">Estudiante</option>
+                                                <option value="teacher">Profesor</option>
+                                                <option value="admin">Administrador</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group text-center">
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        <i class="fas fa-user-plus"></i> Registrarse
+                                    </button>
+                                    <a href="/login" id="back-to-login-mobile" class="btn btn-secondary btn-block mobile-show mt-2">
+                                        <i class="fas fa-arrow-left"></i> Volver al Login
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Principal -->
+        <div id="dashboard-screen" class="screen">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <button id="mobile-menu-toggle" class="btn btn-link mobile-show">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2><i class="fas fa-graduation-cap"></i> <span class="mobile-hide">CodeUp Riwi</span></h2>
+                </div>
+                <div class="nav-user">
+                    <span id="user-name" class="mobile-hide">Usuario</span>
+                    <button id="logout-btn" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i> <span class="mobile-hide">Cerrar Sesión</span>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="dashboard-container">
+                <aside class="sidebar" id="sidebar">
+                    <div class="sidebar-header mobile-show">
+                        <h3><i class="fas fa-graduation-cap"></i> CodeUp Riwi</h3>
+                        <button id="mobile-menu-close" class="btn btn-link">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <ul class="nav-menu">
+                        <li><a href="/dashboard" data-section="dashboard" class="nav-link active">
+                            <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
+                        </a></li>
+                        <li><a href="/subjects" data-section="subjects" class="nav-link">
+                            <i class="fas fa-book"></i> <span>Materias</span>
+                        </a></li>
+                        <li><a href="/grades" data-section="grades" class="nav-link">
+                            <i class="fas fa-chart-line"></i> <span>Notas</span>
+                        </a></li>
+                        <li><a href="/reports" data-section="reports" class="nav-link">
+                            <i class="fas fa-file-alt"></i> <span>Reportes</span>
+                        </a></li>
+                        <li><a href="/users" data-section="users" class="nav-link admin-only">
+                            <i class="fas fa-users"></i> <span>Usuarios</span>
+                        </a></li>
+                    </ul>
+                    <div class="sidebar-footer mobile-show">
+                        <div class="user-info">
+                            <span id="mobile-user-name">Usuario</span>
+                            <button id="mobile-logout-btn" class="btn btn-outline btn-sm">
+                                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+                <main class="main-content">
+                    <div class="container-fluid">
+                        <div id="content-area">
+                            <!-- El contenido se cargará dinámicamente aquí -->
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/performance-loader.js"></script>
+    <script src="js/session-cache.js"></script>
+    <script src="js/error-handler.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/password-validator.js"></script>
+    <script src="js/loading-manager.js"></script>
+    <script src="js/form-validator.js"></script>
+    <script src="js/test-runner.js"></script>
+    <script src="js/auth-tests.js"></script>
+    <script src="js/security-tests.js"></script>
+    <script src="js/search-manager.js"></script>
+    <script src="js/notification-manager.js"></script>
+    <script src="js/test-panel.js"></script>
+    <script src="js/responsive-utils.js"></script>
+    <script src="js/auth-manager.js"></script>
+    <script src="js/navigation-manager.js"></script>
+    <script src="js/ui-manager.js"></script>
+    <script src="js/mobile-navigation.js"></script>
+    <script src="js/performance-optimizer.js"></script>
+    <script src="js/test-data.js"></script>
+    <script src="js/dashboard-tests.js"></script>
+    <script src="js/test-control-panel.js"></script>
+    <script src="js/quick-test.js"></script>
+    <script src="js/table-filters.js"></script>
+    <script src="js/calendar-manager.js"></script>
+    <script src="js/modern-animations.js"></script>
+    <script src="js/messaging-system.js"></script>
+    <script src="js/notification-system.js"></script>
+    <script src="js/file-system.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/database-adapter.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/session-manager.js"></script>
+    <script src="js/session-indicator.js"></script>
+    <script src="js/handlers.js"></script>
+    <script src="js/api-client.js"></script>
+    <script src="js/app-minimal.js"></script>
 </body>
 </html>
