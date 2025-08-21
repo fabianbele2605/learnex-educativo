@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/modern-ui.css">
     <link rel="stylesheet" href="css/messaging-files.css">
+    <link rel="stylesheet" href="css/academic-features.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Preload critical resources -->
     <link rel="preload" href="css/styles.css" as="style">
@@ -129,7 +130,10 @@
                     <h2><i class="fas fa-graduation-cap"></i> <span class="mobile-hide">CodeUp Riwi</span></h2>
                 </div>
                 <div class="nav-user">
-                    <span id="user-name" class="mobile-hide">Usuario</span>
+                    <div class="user-info mobile-hide">
+                        <span id="user-name" class="user-name">Usuario</span>
+                        <span id="user-role" class="user-role">Rol</span>
+                    </div>
                     <button id="logout-btn" class="btn btn-outline">
                         <i class="fas fa-sign-out-alt"></i> <span class="mobile-hide">Cerrar Sesión</span>
                     </button>
@@ -155,6 +159,18 @@
                         <li><a href="/users" data-section="users" class="nav-link admin-only">
                             <i class="fas fa-users"></i> <span>Usuarios</span>
                         </a></li>
+                        <li><a href="/messages" data-section="messages" class="nav-link">
+                            <i class="fas fa-comments"></i> <span>Mensajes</span>
+                        </a></li>
+                        <li><a href="/schedules" data-section="schedules" class="nav-link">
+                            <i class="fas fa-calendar"></i> <span>Horarios</span>
+                        </a></li>
+                        <li><a href="/attendance" data-section="attendance" class="nav-link teacher-only admin-only">
+                            <i class="fas fa-check-circle"></i> <span>Asistencia</span>
+                        </a></li>
+                        <li><a href="/assignments" data-section="assignments" class="nav-link">
+                            <i class="fas fa-tasks"></i> <span>Tareas</span>
+                        </a></li>
                     </ul>
 
                 </aside>
@@ -173,6 +189,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="js/api-client.js"></script>
     <script src="js/performance-loader.js"></script>
     <script src="js/session-cache.js"></script>
     <script src="js/error-handler.js"></script>
@@ -209,6 +226,7 @@
     <script src="js/session-indicator.js"></script>
     <script src="js/handlers.js"></script>
     <script src="js/api-client.js"></script>
+    <script src="js/academic-manager.js"></script>
     <script src="js/app-minimal.js"></script>
 </body>
 </html>

@@ -1,0 +1,32 @@
+{
+  "name": "academic-system",
+  "version": "1.0.0",
+  "description": "Sistema de Gestión Académica con PostgreSQL",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "setup-db": "psql -U postgres -f database/schema.sql",
+    "backup": "node -e \"const BackupManager = require('./database/backup'); const DatabaseConfig = require('./database/config'); const db = new DatabaseConfig(); const backup = new BackupManager(db); backup.createBackup('manual').then(console.log);\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "pg": "^8.11.3",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "academic",
+    "postgresql",
+    "nodejs",
+    "education"
+  ],
+  "author": "Tu Nombre",
+  "license": "MIT"
+}

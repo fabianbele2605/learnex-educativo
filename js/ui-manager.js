@@ -9,7 +9,11 @@ class UIManager {
             subjects: () => this.getSubjectsContent(),
             grades: () => this.getGradesContent(),
             reports: () => this.loadReportsContent(),
-            users: () => this.getUsersContent()
+            users: () => this.getUsersContent(),
+            messages: () => this.getMessagesContent(),
+            schedules: () => this.getSchedulesContent(),
+            attendance: () => this.getAttendanceContent(),
+            assignments: () => this.getAssignmentsContent()
         };
     }
 
@@ -35,6 +39,8 @@ class UIManager {
                     // Setup events de forma asíncrona
                     requestAnimationFrame(() => {
                         this.setupSectionEvents(section);
+                        // Mantener información del usuario actualizada
+                        this.updateUserDisplay();
                     });
                 }
             } catch (error) {
@@ -44,6 +50,9 @@ class UIManager {
         } else {
             contentArea.innerHTML = '<div class="alert alert-info">Sección en desarrollo</div>';
         }
+        
+        // Asegurar que la información del usuario se mantenga
+        this.updateUserDisplay();
     }
 
     setupSectionEvents(section) {
@@ -59,6 +68,18 @@ class UIManager {
                 break;
             case 'users':
                 this.setupUsersEvents();
+                break;
+            case 'messages':
+                this.setupMessagesEvents();
+                break;
+            case 'schedules':
+                this.setupSchedulesEvents();
+                break;
+            case 'attendance':
+                this.setupAttendanceEvents();
+                break;
+            case 'assignments':
+                this.setupAssignmentsEvents();
                 break;
         }
     }
@@ -238,15 +259,17 @@ class UIManager {
                     <div class="widget quick-actions">
                         <h4><i class="fas fa-bolt"></i> Acciones Rápidas</h4>
                         <div class="action-buttons">
-                            <button class="action-btn" data-action="open-chat">
+                            <button class="action-btn" onclick="window.app.navigateToSection('messages')">
                                 <i class="fas fa-comments"></i> Mensajes
-                                <span class="messages-badge" style="display: none;">0</span>
                             </button>
-                            <button class="action-btn" data-action="open-files">
-                                <i class="fas fa-folder"></i> Archivos
+                            <button class="action-btn" onclick="window.app.navigateToSection('schedules')">
+                                <i class="fas fa-calendar"></i> Horarios
                             </button>
                             <button class="action-btn" onclick="window.app.navigateToSection('users')">
                                 <i class="fas fa-users"></i> Usuarios
+                            </button>
+                            <button class="action-btn" onclick="window.app.navigateToSection('attendance')">
+                                <i class="fas fa-check-circle"></i> Asistencia
                             </button>
                         </div>
                     </div>
@@ -328,14 +351,17 @@ class UIManager {
                     <div class="widget quick-actions">
                         <h4><i class="fas fa-bolt"></i> Acciones Rápidas</h4>
                         <div class="action-buttons">
-                            <button class="action-btn" onclick="window.app.navigateToSection('subjects')">
-                                <i class="fas fa-plus"></i> Nueva Materia
+                            <button class="action-btn" onclick="window.app.navigateToSection('assignments')">
+                                <i class="fas fa-tasks"></i> Tareas
                             </button>
-                            <button class="action-btn" onclick="window.app.navigateToSection('grades')">
-                                <i class="fas fa-star"></i> Calificar
+                            <button class="action-btn" onclick="window.app.navigateToSection('attendance')">
+                                <i class="fas fa-check-circle"></i> Asistencia
                             </button>
-                            <button class="action-btn" onclick="window.app.navigateToSection('reports')">
-                                <i class="fas fa-chart-bar"></i> Mis Reportes
+                            <button class="action-btn" onclick="window.app.navigateToSection('messages')">
+                                <i class="fas fa-comments"></i> Mensajes
+                            </button>
+                            <button class="action-btn" onclick="window.app.navigateToSection('schedules')">
+                                <i class="fas fa-calendar"></i> Horarios
                             </button>
                         </div>
                     </div>
@@ -1296,15 +1322,250 @@ class UIManager {
         const user = this.authManager.getCurrentUser();
         if (user) {
             const userNameElement = document.getElementById('user-name');
+            const userRoleElement = document.getElementById('user-role');
             
             if (userNameElement) userNameElement.textContent = user.name;
-
-            // Mostrar/ocultar elementos según rol
-            if (user.role === 'admin' || user.role === 'teacher') {
-                document.querySelectorAll('.admin-only').forEach(el => {
-                    el.classList.add('show');
-                });
+            if (userRoleElement) {
+                userRoleElement.textContent = this.getRoleLabel(user.role);
+                userRoleElement.className = `user-role ${user.role}`;
             }
+
+            // Mostrar elementos según rol
+            document.querySelectorAll('.admin-only').forEach(el => {
+                if (user.role === 'admin') {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+            
+            document.querySelectorAll('.teacher-only').forEach(el => {
+                if (user.role === 'teacher' || user.role === 'admin') {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+            
+            document.querySelectorAll('.student-only').forEach(el => {
+                if (user.role === 'student') {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+        }
+    }
+
+    // === FUNCIONALIDADES ACADÉMICAS ===
+    
+    getMessagesContent() {
+        return `
+            <div class="section-header">
+                <h2><i class="fas fa-comments"></i> Mensajes</h2>
+            </div>
+            
+            <div class="messages-container">
+                <div class="chat-users-list" id="chat-users-list">
+                    <h4>Contactos</h4>
+                    <div id="users-list"></div>
+                </div>
+                
+                <div class="chat-container" id="chat-container">
+                    <div class="chat-placeholder">
+                        <i class="fas fa-comments"></i>
+                        <p>Selecciona un contacto para iniciar una conversación</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    getSchedulesContent() {
+        const user = this.authManager.getCurrentUser();
+        return `
+            <div class="section-header">
+                <h2><i class="fas fa-calendar"></i> Horarios de Clases</h2>
+                ${['admin', 'teacher'].includes(user.role) ? `
+                    <button class="btn btn-primary" onclick="window.academicManager.showCreateScheduleModal()">
+                        <i class="fas fa-plus"></i> Nuevo Horario
+                    </button>
+                ` : ''}
+            </div>
+            
+            <div id="schedule-container"></div>
+        `;
+    }
+    
+    getAttendanceContent() {
+        const user = this.authManager.getCurrentUser();
+        if (!['admin', 'teacher'].includes(user.role)) {
+            return '<div class="alert alert-danger">No tienes permisos para acceder a esta sección</div>';
+        }
+        
+        return `
+            <div class="section-header">
+                <h2><i class="fas fa-check-circle"></i> Control de Asistencia</h2>
+                <div class="attendance-controls">
+                    <input type="date" id="attendance-date" class="form-control" value="${new Date().toISOString().split('T')[0]}">
+                    <select id="attendance-subject" class="form-control">
+                        <option value="">Seleccionar materia</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="window.academicManager.loadAttendanceForDate()">Cargar</button>
+                </div>
+            </div>
+            
+            <div id="attendance-list"></div>
+        `;
+    }
+    
+    getAssignmentsContent() {
+        const user = this.authManager.getCurrentUser();
+        return `
+            <div class="section-header">
+                <h2><i class="fas fa-tasks"></i> Tareas y Proyectos</h2>
+                ${['admin', 'teacher'].includes(user.role) ? `
+                    <button class="btn btn-primary" onclick="window.academicManager.showCreateAssignmentModal()">
+                        <i class="fas fa-plus"></i> Nueva Tarea
+                    </button>
+                ` : ''}
+            </div>
+            
+            <div id="assignments-list"></div>
+        `;
+    }
+    
+    setupMessagesEvents() {
+        this.loadChatUsers();
+    }
+    
+    setupSchedulesEvents() {
+        this.loadSchedules();
+    }
+    
+    setupAttendanceEvents() {
+        this.loadSubjectsForAttendance();
+    }
+    
+    setupAssignmentsEvents() {
+        this.loadAssignments();
+    }
+    
+    async loadChatUsers() {
+        try {
+            const users = await window.apiClient.getUsers();
+            const currentUser = this.authManager.getCurrentUser();
+            const otherUsers = users.filter(u => u.id !== currentUser.id);
+            
+            const container = document.getElementById('users-list');
+            if (container) {
+                container.innerHTML = otherUsers.map(user => `
+                    <div class="chat-user" data-user-id="${user.id}" data-user-name="${user.name}">
+                        <div class="user-avatar">${user.name.charAt(0).toUpperCase()}</div>
+                        <div class="user-info">
+                            <div class="user-name">${user.name}</div>
+                            <div class="user-role">${this.getRoleLabel(user.role)}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Agregar event listeners
+                setTimeout(() => {
+                    document.querySelectorAll('.chat-user').forEach(userEl => {
+                        userEl.addEventListener('click', () => {
+                            const userId = userEl.dataset.userId;
+                            const userName = userEl.dataset.userName;
+                            console.log('Click en usuario:', userId, userName);
+                            if (window.academicManager) {
+                                window.academicManager.openChat(userId, userName);
+                            }
+                        });
+                    });
+                }, 100);
+            }
+        } catch (error) {
+            console.error('Error cargando usuarios:', error);
+        }
+    }
+    
+    async loadSchedules() {
+        try {
+            const user = this.authManager.getCurrentUser();
+            let schedules;
+            
+            if (user.role === 'teacher') {
+                // Solo horarios de las materias del profesor
+                const subjects = await window.apiClient.getSubjects();
+                const teacherSubjects = subjects.filter(s => s.teacher_id === user.id);
+                schedules = [];
+                for (const subject of teacherSubjects) {
+                    const subjectSchedules = await window.apiClient.getSchedules(subject.id);
+                    schedules.push(...subjectSchedules);
+                }
+            } else if (user.role === 'student') {
+                // Solo horarios de materias inscritas
+                schedules = await window.apiClient.getSchedules();
+                // TODO: Filtrar por inscripciones del estudiante
+            } else {
+                // Admin ve todos
+                schedules = await window.apiClient.getSchedules();
+            }
+            
+            if (window.academicManager) {
+                window.academicManager.renderWeeklySchedule(schedules, 'schedule-container');
+            }
+        } catch (error) {
+            console.error('Error cargando horarios:', error);
+        }
+    }
+    
+    async loadSubjectsForAttendance() {
+        try {
+            const subjects = await window.apiClient.getSubjects();
+            const user = this.authManager.getCurrentUser();
+            
+            // Filtrar materias según el rol
+            let filteredSubjects = subjects;
+            if (user.role === 'teacher') {
+                filteredSubjects = subjects.filter(s => s.teacher_id === user.id);
+            }
+            
+            const select = document.getElementById('attendance-subject');
+            if (select) {
+                select.innerHTML = '<option value="">Seleccionar materia</option>' +
+                    filteredSubjects.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+            }
+        } catch (error) {
+            console.error('Error cargando materias:', error);
+        }
+    }
+    
+    async loadAssignments() {
+        try {
+            const user = this.authManager.getCurrentUser();
+            let assignments;
+            
+            if (user.role === 'teacher') {
+                // Solo tareas de las materias del profesor
+                const subjects = await window.apiClient.getSubjects();
+                const teacherSubjects = subjects.filter(s => s.teacher_id === user.id);
+                const subjectIds = teacherSubjects.map(s => s.id);
+                assignments = await window.apiClient.getAssignments();
+                assignments = assignments.filter(a => subjectIds.includes(a.subject_id));
+            } else if (user.role === 'student') {
+                // Solo tareas de materias inscritas
+                assignments = await window.apiClient.getAssignments();
+                // TODO: Filtrar por inscripciones del estudiante
+            } else {
+                // Admin ve todas
+                assignments = await window.apiClient.getAssignments();
+            }
+            
+            if (window.academicManager) {
+                window.academicManager.renderAssignmentsList(assignments, user.role);
+            }
+        } catch (error) {
+            console.error('Error cargando tareas:', error);
         }
     }
 }

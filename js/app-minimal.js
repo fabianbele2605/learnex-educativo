@@ -214,6 +214,8 @@ class App {
         // Asegurar que el contenido se carga inmediatamente
         requestAnimationFrame(() => {
             this.uiManager.loadSectionContent(section);
+            // Mantener información del usuario
+            this.uiManager.updateUserDisplay();
         });
     }
 }

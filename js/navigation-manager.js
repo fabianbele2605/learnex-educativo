@@ -13,7 +13,11 @@ class NavigationManager {
             '/subjects': 'dashboard',
             '/grades': 'dashboard',
             '/reports': 'dashboard',
-            '/users': 'dashboard'
+            '/users': 'dashboard',
+            '/messages': 'dashboard',
+            '/schedules': 'dashboard',
+            '/attendance': 'dashboard',
+            '/assignments': 'dashboard'
         };
         this.init();
     }
@@ -54,7 +58,7 @@ class NavigationManager {
         
         if (screen === 'dashboard') {
             const section = path.substring(1) || 'dashboard';
-            if (['subjects', 'grades', 'reports', 'users'].includes(section)) {
+            if (['subjects', 'grades', 'reports', 'users', 'messages', 'schedules', 'attendance', 'assignments'].includes(section)) {
                 this.navigateToSection(section);
             } else {
                 this.navigateToSection('dashboard');

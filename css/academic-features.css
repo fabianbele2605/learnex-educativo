@@ -1,0 +1,541 @@
+/* Estilos para funcionalidades académicas */
+
+/* === HORARIOS === */
+.schedule-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(7, 1fr);
+    gap: 1px;
+    background: #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.schedule-header {
+    display: contents;
+}
+
+.time-column, .day-column {
+    background: #4f46e5;
+    color: white;
+    padding: 12px 8px;
+    font-weight: 600;
+    text-align: center;
+    font-size: 0.875rem;
+}
+
+.schedule-row {
+    display: contents;
+}
+
+.time-slot {
+    background: #f8fafc;
+    padding: 8px;
+    text-align: center;
+    font-weight: 500;
+    color: #64748b;
+    font-size: 0.75rem;
+}
+
+.schedule-cell {
+    background: white;
+    padding: 4px;
+    min-height: 60px;
+    position: relative;
+}
+
+.schedule-item {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    margin-bottom: 2px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.schedule-item:hover {
+    transform: scale(1.02);
+}
+
+.subject-name {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.schedule-time {
+    font-size: 0.65rem;
+    opacity: 0.9;
+}
+
+.classroom {
+    font-size: 0.65rem;
+    opacity: 0.8;
+}
+
+/* === ASISTENCIA === */
+.attendance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.attendance-grid {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.attendance-row {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background 0.2s ease;
+}
+
+.attendance-row:hover {
+    background: #f8fafc;
+}
+
+.student-info {
+    flex: 1;
+}
+
+.student-name {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.student-email {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.attendance-options {
+    display: flex;
+    gap: 16px;
+}
+
+.attendance-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.attendance-option input[type="radio"] {
+    margin: 0;
+}
+
+.status-present { color: #10b981; }
+.status-absent { color: #ef4444; }
+.status-late { color: #f59e0b; }
+.status-excused { color: #6366f1; }
+
+/* === TAREAS === */
+.assignments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.assignments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.assignment-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.assignment-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.assignment-card.overdue {
+    border-left: 4px solid #ef4444;
+}
+
+.assignment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.assignment-header h5 {
+    margin: 0;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.assignment-type {
+    background: #e0e7ff;
+    color: #4338ca;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.assignment-body p {
+    color: #64748b;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.assignment-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    font-size: 0.875rem;
+}
+
+.due-date, .max-score {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #64748b;
+}
+
+.due-date.overdue {
+    color: #ef4444;
+}
+
+.assignment-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* === MENSAJERÍA === */
+.messages-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+    height: 600px;
+}
+
+.chat-users-list {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow-y: auto;
+}
+
+.chat-users-list h4 {
+    margin-bottom: 16px;
+    color: #1e293b;
+    font-size: 1.1rem;
+}
+
+.chat-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 8px;
+    border: 2px solid transparent;
+}
+
+.chat-user:hover {
+    background: #f1f5f9;
+    border-color: #6366f1;
+    transform: translateX(4px);
+}
+
+.chat-user.active {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: #6366f1;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 2px;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: capitalize;
+}
+
+.chat-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #64748b;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.chat-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.chat-header {
+    background: #f8fafc;
+    padding: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: 12px 12px 0 0;
+}
+
+.chat-header h4 {
+    margin: 0;
+    color: #1e293b;
+    font-size: 1.1rem;
+}
+
+.no-messages {
+    text-align: center;
+    color: #64748b;
+    padding: 40px 20px;
+    font-style: italic;
+}
+
+.message-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error);
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 8px 0;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .messages-container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    
+    .chat-users-list {
+        order: 2;
+        height: 200px;
+    }
+}
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    background: #f8fafc;
+}
+
+.message {
+    margin-bottom: 12px;
+    display: flex;
+}
+
+.message-own {
+    justify-content: flex-end;
+}
+
+.message-other {
+    justify-content: flex-start;
+}
+
+.message-content {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    position: relative;
+}
+
+.message-own .message-content {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+}
+
+.message-other .message-content {
+    background: white;
+    color: #1e293b;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.message-text {
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.message-unread {
+    width: 8px;
+    height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+    position: absolute;
+    top: -2px;
+    right: -2px;
+}
+
+.chat-input {
+    display: flex;
+    padding: 16px;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    gap: 12px;
+}
+
+.chat-input input {
+    flex: 1;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.chat-input input:focus {
+    border-color: #6366f1;
+}
+
+.chat-input button {
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* === MODALES === */
+.academic-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.academic-modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.academic-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.academic-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #64748b;
+    padding: 4px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .schedule-grid {
+        font-size: 0.75rem;
+        grid-template-columns: 60px repeat(7, 1fr);
+    }
+    
+    .assignments-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .attendance-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .attendance-options {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .assignment-header {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .assignment-meta {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .chat-container {
+        height: 400px;
+    }
+    
+    .message-content {
+        max-width: 85%;
+    }
+}
